@@ -85,11 +85,14 @@ FORM BOM PRODUK
 <div class="form-group">
     <label for="exampleInputEmail1">Kode Produk</label>
   </div>
+  <div class="mb-3">
+   <input type="text" id="searchFilter" name="searchFilter" placeholder="Search" onkeyup="filterItems(this);">
+  </div>
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <label class="input-group-text" for="inputGroupSelect01">Pilih</label>
   </div>
-    <select class="custom-select" id="inputGroupSelect01" name="kode">
+    <select class="custom-select" id="select_kode" name="kode">
         <?php while($kode = mysqli_fetch_row($kode_query) ):?>
           <option value="<?=$kode[0];?>"><?=$kode[0];?> => <?=$kode[1];?></option>
         <?php endwhile;?>
@@ -123,6 +126,46 @@ FORM BOM PRODUK
       } );
 </script>
 
+//search
+<script type="text/javascript">
+var optionsCache = [];
+
+function filterItems(el) {
+  var value = el.value.toLowerCase();
+  var form = el.form;
+  var opt, sel = form.select_kode;
+  if (value == '') {
+    restoreOptions();
+  } else {
+    // Loop backwards through options as removing them modifies the next
+    // to be visited if go forwards
+    for (var i=sel.options.length-1; i>=0; i--) {
+      opt = sel.options[i];
+      if (opt.text.toLowerCase().indexOf(value) == -1){
+        sel.removeChild(opt)
+      }
+    }
+  }
+}
+
+// Restore select to original state
+function restoreOptions(){
+  var sel = document.getElementById('select_kode');
+  sel.options.length = 0;
+  for (var i=0, iLen=optionsCache.length; i<iLen; i++) {
+    sel.appendChild(optionsCache[i]);
+  }
+}
+
+
+window.onload = function() {
+  // Load cache
+  var sel = document.getElementById('select_kode');
+  for (var i=0, iLen=sel.options.length; i<iLen; i++) {
+    optionsCache.push(sel.options[i]);
+  }
+}
+</script>
 
 
 <script type ="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
