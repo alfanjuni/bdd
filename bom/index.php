@@ -91,7 +91,7 @@ FORM BOM PRODUK
   </div>
     <select class="custom-select" id="inputGroupSelect01" name="kode">
         <?php while($kode = mysqli_fetch_row($kode_query) ):?>
-          <option value="<?=$kode[0];?>"><?=$kode[1];?></option>
+          <option value="<?=$kode[0];?>"><?=$kode[0];?> => <?=$kode[1];?></option>
         <?php endwhile;?>
     </select>
     </div>
