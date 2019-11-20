@@ -5,7 +5,10 @@ $conn = mysqli_connect("localhost", "root", "", "bdd");
 $id = $_POST["kode"];
 $kode_query = mysqli_query($conn, "SELECT `produit_fini`.`Ref_prod_fini`, CONCAT(`gamme`.`code_gamme`,'-',`meuble`.`code_meuble`,'-',`couleur`.`Code_couleur`) AS kode FROM `couleur` INNER JOIN `produit_fini` ON `couleur`.`Ref_couleur` = `produit_fini`.`Ref_couleur` INNER JOIN `produit_brut` ON `produit_fini`.`Ref_produit` = `produit_brut`.`Ref_produit` INNER JOIN `meuble` ON `produit_brut`.`Ref_meuble` = `meuble`.`Ref_meuble` INNER JOIN `gamme` ON `meuble`.`Ref_gamme` = `gamme`.`ref_gamme` WHERE `produit_fini`.`Ref_prod_fini`=$id");
 $aksesoris_query = mysqli_query($conn,"SELECT * FROM contient LEFT JOIN `bdd`.`accessoire` ON (`contient`.`Ref_accessoire` = `accessoire`.`Ref_accessoire`) WHERE contient.Ref_prod_fini=$id");
-$packing_query = mysqli_query($conn,"SELECT * FROM `bdd`.`contientpacking` LEFT JOIN `bdd`.`packing` ON (`contientpacking`.`Ref_packing_item` = `packing`.`Ref_emballage`) WHERE contientpacking.Ref_prod_fini=$id");
+$packing_query = mysqli_query($conn,"SELECT * FROM `bdd`.`contientpacking` 
+LEFT JOIN `bdd`.`packing` ON (`contientpacking`.`Ref_packing_item` = `packing`.`Ref_emballage`)
+INNER JOIN `emballage` ON (`contientpacking`.`Ref_packing_type` = `emballage`.`Ref_emballage`)
+WHERE contientpacking.Ref_prod_fini=$id");
 $cloth_query = mysqli_query($conn,"SELECT `contientcloth`.`Ref_Cloth_Content`, `contientcloth`.`Width`, `contientcloth`.`Length`,`contientcloth`.`NbUnit`, `cloth`.`Price`, `cloth`.`Margin`, `cloth`.`Name`, `contientcloth`.`Ref_prod_fini`
 FROM `cloth`
 INNER JOIN `contientcloth` 
@@ -108,7 +111,7 @@ Detail BOM <?=$_POST["kode"];?> - ( <?=$kodefini["kode"];?> )
     <tr>
     <td>Packing</td>
     <td>Packing</td>
-    <td><?=$row[0];?></td>
+    <td><?=$row[16];?></td>
     <td><?=$row[4];?></td>
     <td><?=$row[5];?></td>
     <td><?=$row[7];?></td>
