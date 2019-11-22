@@ -16,6 +16,8 @@ INNER JOIN `contientcloth`
 INNER JOIN `produit_fini`
 	ON `contientcloth`.`Ref_prod_fini` = `produit_fini`.`Ref_prod_fini`
  WHERE `produit_fini`.`Ref_prod_fini`=$id");
+$finishing_query = mysqli_query($conn,"SELECT * FROM `contientfinishing` INNER JOIN `couleur` oN `contientfinishing`.`Ref_couleur` = `couleur`.`Ref_couleur`
+WHERE `Ref_prod_fini` = $id");
 
 
 // if(!$result){
@@ -140,6 +142,21 @@ Detail BOM <?=$_POST["kode"];?> - ( <?=$kodefini["kode"];?> )
     <td><?=$row[5];?></td>
     <td><?=$row[3]*$row[4];?></td>
     <td><?=$row[6];?></td>
+    <td><?=$row[0];?></td>
+  </tr>
+<?php endwhile;?>
+<?php while($row = mysqli_fetch_row($finishing_query) ):?>
+  <tr>
+    <td>Finishing</td>
+    <td>Finishing</td>
+    <td><?=$row[6];?></td>
+    <td><?=0;?></td>
+    <td><?=0;?></td>
+    <td><?=$row[3];?></td>
+    <td><?=$row[9];?></td>
+    <td><?=0;?></td>
+    <td><?=$row[3]*$row[9];?></td>
+    <td><?=$row[5];?></td>
     <td><?=$row[0];?></td>
   </tr>
 <?php endwhile;?>

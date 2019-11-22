@@ -3,7 +3,7 @@ $conn = mysqli_connect("localhost", "root", "", "bdd");
 
 //ambil data dari product fini
 $result = mysqli_query($conn, "SELECT * FROM produit_fini LIMIT 20");
-$kode_query = mysqli_query($conn, "SELECT `produit_fini`.`Ref_prod_fini`, CONCAT(`gamme`.`code_gamme`,'-',`meuble`.`code_meuble`,'-',`couleur`.`Code_couleur`) AS kode FROM `couleur` INNER JOIN `produit_fini` ON `couleur`.`Ref_couleur` = `produit_fini`.`Ref_couleur` INNER JOIN `produit_brut` ON `produit_fini`.`Ref_produit` = `produit_brut`.`Ref_produit` INNER JOIN `meuble` ON `produit_brut`.`Ref_meuble` = `meuble`.`Ref_meuble` INNER JOIN `gamme` ON `meuble`.`Ref_gamme` = `gamme`.`ref_gamme`");
+$kode_query = mysqli_query($conn, "SELECT `produit_fini`.`Ref_prod_fini`, CONCAT(`gamme`.`code_gamme`,'-',`meuble`.`code_meuble`,' ',`couleur`.`Code_couleur`) AS kode FROM `couleur` INNER JOIN `produit_fini` ON `couleur`.`Ref_couleur` = `produit_fini`.`Ref_couleur` INNER JOIN `produit_brut` ON `produit_fini`.`Ref_produit` = `produit_brut`.`Ref_produit` INNER JOIN `meuble` ON `produit_brut`.`Ref_meuble` = `meuble`.`Ref_meuble` INNER JOIN `gamme` ON `meuble`.`Ref_gamme` = `gamme`.`ref_gamme`");
 // if(!$result){
 //     echo mysqli_error($conn);
 // }
